@@ -1,7 +1,16 @@
-import type { NextConfig } from "next";
+import { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  output: "export", // Enable static export
+  images: {
+    unoptimized: true, // Disable image optimization
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "images.credly.com",
+      },
+    ],
+  },
 };
 
 export default nextConfig;
