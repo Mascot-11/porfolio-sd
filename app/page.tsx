@@ -449,7 +449,7 @@ export default function Portfolio() {
               {
                 school: "Islington College",
                 degree: "BSc Honours in Computing",
-                period: "2022-Present",
+                period: "2022-2025",
                 description:
                   "Focusing on software development, testing, and quality assurance. Maintaining excellent academic performance.",
                 current: true,
