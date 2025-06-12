@@ -32,10 +32,17 @@ import {
   Users,
   Clock,
   MessageSquare,
+  Sparkles,
+  TrendingUp,
+  Star,
 } from "lucide-react";
 import { ContactForm } from "./components/ContactForm";
 import { Modal } from "./components/Modal";
 import { SpotlightCursor } from "./components/SpotlightCursor";
+import { EnhancedHero } from "./components/EnhancedHero";
+import { EnhancedSkills } from "./components/EnhancedSkills";
+import { AnalyticsDashboard } from "./components/AnalyticsDashboard";
+import { useAnalytics } from "./hooks/useAnalytics";
 import "./globals.css";
 
 interface SectionProps {
@@ -51,9 +58,9 @@ const Section = ({ children, className = "", delay = 0, id }: SectionProps) => {
       id={id}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, amount: 0.8 }}
-      transition={{ duration: 0.6, delay }}
-      className={`py-16 ${className}`}
+      viewport={{ once: true, amount: 0.3 }}
+      transition={{ duration: 0.8, delay }}
+      className={`py-20 ${className}`}
     >
       {children}
     </motion.section>
@@ -90,16 +97,6 @@ const quotes = [
   "The best revenge is massive success. – Frank Sinatra",
   "Success is not final, failure is not fatal: It is the courage to continue that counts. – Winston Churchill",
   "Success is not how high you have climbed, but how you make a positive difference to the world. – Roy T. Bennett",
-  "Don't be afraid to give up the good to go for the great. – John D. Rockefeller",
-  "Everything you've ever wanted is on the other side of fear. – George Addair",
-  "Great things are not done by impulse, but by a series of small things brought together. – Vincent Van Gogh",
-  "The harder you work for something, the greater you'll feel when you achieve it. – Anonymous",
-  "Strive not to be a success, but rather to be of value. – Albert Einstein",
-  "Success is a journey, not a destination. – Arthur Ashe",
-  "Success is walking from failure to failure with no loss of enthusiasm. – Winston Churchill",
-  "The only limit to our realization of tomorrow is our doubts of today. – Franklin D. Roosevelt",
-  "It's not whether you get knocked down, it's whether you get up. – Vince Lombardi",
-  "If you are not willing to risk the usual, you will have to settle for the ordinary. – Jim Rohn",
 ];
 
 export default function Portfolio() {
@@ -108,6 +105,7 @@ export default function Portfolio() {
   const [selectedCert, setSelectedCert] = useState<string | null>(null);
   const [randomQuote, setRandomQuote] = useState("");
   const headerRef = useRef<HTMLElement>(null);
+  const { analytics, trackPageView } = useAnalytics();
 
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
@@ -154,19 +152,6 @@ export default function Portfolio() {
     setRandomQuote(quotes[Math.floor(Math.random() * quotes.length)]);
   }, []);
 
-  useEffect(() => {
-    // On page load or when changing themes, best to add inline in `head` to avoid FOUC
-    if (
-      localStorage.theme === "dark" ||
-      (!("theme" in localStorage) &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches)
-    ) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, []);
-
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -181,31 +166,8 @@ export default function Portfolio() {
       });
       setActiveTab(sectionId);
       setIsMenuOpen(false);
+      trackPageView(sectionId);
     }
-  };
-
-  const skills = {
-    technical: [
-      { name: "Python", icon: PiIcon },
-      { name: "QA Automation", icon: TestTube },
-      { name: "SQL", icon: Database },
-      { name: "Java", icon: Coffee },
-      { name: "Laravel", icon: Code2 },
-      { name: "Javascript", icon: Code2 },
-      { name: "Manual Testing", icon: Eye },
-    ],
-    design: [
-      { name: "Figma", icon: Figma },
-      { name: "Adobe Illustrator", icon: PenTool },
-    ],
-    soft: [
-      { name: "Analytical Thinking", icon: Brain },
-      { name: "Problem Solving", icon: Puzzle },
-      { name: "Team Collaboration", icon: Users },
-      { name: "Time Management", icon: Clock },
-      { name: "Communication", icon: MessageSquare },
-      { name: "Attention to Detail", icon: Eye },
-    ],
   };
 
   const certifications = [
@@ -221,7 +183,7 @@ export default function Portfolio() {
       name: "AWS Academy Machine Learning Foundations",
       image:
         "https://images.credly.com/size/340x340/images/254b883a-44a3-4cec-b6f2-946a80522b39/image.png",
-      alt: "/images/AWS Academy Machine Learning Foundations Certificate",
+      alt: "AWS Academy Machine Learning Foundations Certificate",
       fullImage:
         "/images/AWS_Academy_Graduate___AWS_Academy_Machine_Learning_Foundations_Badge20250126-26-ddihn6_page-0001.jpg",
     },
@@ -249,6 +211,7 @@ export default function Portfolio() {
     { id: "skills", label: "Skills" },
     { id: "experience", label: "Experience" },
     { id: "certifications", label: "Certifications" },
+    { id: "contact", label: "Contact" },
   ];
 
   const containerVariants = {
@@ -270,7 +233,7 @@ export default function Portfolio() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white relative">
       <Head>
         <link rel="canonical" href="https://www.shreeyushdhungana.com.np" />
       </Head>
@@ -287,17 +250,22 @@ export default function Portfolio() {
           ],
         }}
       />
+      
+      {/* Enhanced Header */}
       <header
         ref={headerRef}
-        className="fixed top-0 w-full bg-white/90 backdrop-blur-md z-50 border-b border-gray-100"
+        className="fixed top-0 w-full bg-white/95 backdrop-blur-md z-50 border-b border-gray-100 shadow-sm"
       >
-        <motion.div className="h-1 bg-black origin-left" style={{ scaleX }} />
+        <motion.div 
+          className="h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 origin-left" 
+          style={{ scaleX }} 
+        />
         <nav className="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex justify-between items-center">
             <motion.h1
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
-              className="text-xl sm:text-2xl font-bold"
+              className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent"
             >
               Shreeyush Dhungana
             </motion.h1>
@@ -308,10 +276,10 @@ export default function Portfolio() {
                   key={item.id}
                   onClick={() => scrollToSection(item.id)}
                   aria-current={activeTab === item.id ? "page" : undefined}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                  className={`px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 ${
                     activeTab === item.id
-                      ? "bg-black text-white shadow-md"
-                      : "text-gray-600 hover:bg-gray-50"
+                      ? "bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg"
+                      : "text-gray-600 hover:bg-gray-50 hover:text-gray-800"
                   }`}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
@@ -323,7 +291,7 @@ export default function Portfolio() {
 
             <motion.button
               aria-label="Toggle menu"
-              className="md:hidden p-2 rounded-md text-gray-700 hover:bg-gray-100 hover:text-black transition-colors"
+              className="md:hidden p-2 rounded-xl text-gray-700 hover:bg-gray-100 hover:text-black transition-colors"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
@@ -342,13 +310,13 @@ export default function Portfolio() {
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: "auto" }}
                 exit={{ opacity: 0, height: 0 }}
-                className="md:hidden mt-4"
+                className="md:hidden mt-4 bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden"
               >
                 {navItems.map((item) => (
                   <motion.button
                     key={item.id}
                     onClick={() => scrollToSection(item.id)}
-                    className="block w-full text-left py-2 px-4 text-gray-700 hover:bg-gray-100 hover:text-black transition-colors"
+                    className="block w-full text-left py-3 px-4 text-gray-700 hover:bg-gray-50 hover:text-black transition-colors"
                     whileHover={{ x: 5 }}
                   >
                     {item.label}
@@ -362,384 +330,497 @@ export default function Portfolio() {
 
       <main
         id="main-content"
-        className="pt-24 container mx-auto px-4 sm:px-6 lg:px-8"
+        className="pt-24"
       >
-        <Section id="about" className="text-center space-y-8">
-          <motion.div
-            className="space-y-4 max-w-3xl mx-auto"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8 }}
-          >
-            <motion.h2
-              className="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight"
-              initial={{ y: 50, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-            >
-              BSc Honours in <span className="text-gray-700">Computing</span>
-            </motion.h2>
-            <motion.p
-              className="text-lg sm:text-xl text-gray-600 leading-relaxed"
-              initial={{ y: 50, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-            >
-              Passionate QA professional and computing student with a strong
-              focus on software quality assurance. Currently deepening my
-              knowledge in test automation and software testing processes. With
-              AWS certifications and strong problem-solving skills, I
-              continuously improve my technical abilities to contribute to the
-              quality of software products.
-            </motion.p>
-          </motion.div>
-          <motion.div
-            className="flex flex-col items-center gap-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-          >
-            <motion.a
-              href="/ShreeyushDhunganaCV.pdf"
-              download
-              className="px-6 py-3 bg-black text-white rounded-full hover:bg-gray-800 transition-colors flex items-center gap-2 text-sm sm:text-base shadow-md hover:shadow-lg"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <ChevronRight className="w-5 h-5" />
-              Download CV
-            </motion.a>
-            <div className="flex items-center gap-4 mt-4">
-              <motion.a
-                href="https://github.com/Mascot-11"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-700 hover:text-black transition-colors"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-              >
-                <Github className="w-6 h-6" />
-              </motion.a>
-              <motion.a
-                href="https://www.instagram.com/_.mascot/?hl=en"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-700 hover:text-black transition-colors"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-              >
-                <Instagram className="w-6 h-6" />
-              </motion.a>
-            </div>
-          </motion.div>
-        </Section>
+        {/* Enhanced Hero Section */}
+        <EnhancedHero />
 
-        <Section id="education" delay={0.2}>
-          <div className="flex items-center gap-3 mb-8">
-            <Book className="w-8 h-8 text-gray-700" />
-            <h3 className="text-2xl sm:text-3xl font-bold">
-              Education Journey
-            </h3>
-          </div>
-          <motion.div
-            className="space-y-12 max-w-3xl mx-auto"
-            variants={containerVariants}
-          >
-            {[
-              {
-                school: "Islington College",
-                degree: "BSc Honours in Computing",
-                period: "2022-2025",
-                description:
-                  "Focusing on software development, testing, and quality assurance. Maintaining excellent academic performance.",
-                current: true,
-              },
-              {
-                school: "Trinity International SS/College",
-                degree: "High School",
-                period: "2020-2022",
-                description:
-                  "Completed high school with focus on science and mathematics.",
-                current: false,
-              },
-              {
-                school: "Meridian International",
-                degree: "School",
-                period: "2009-2019",
-                description:
-                  "Built strong foundation in academics and participated in various extracurricular activities.",
-                current: false,
-              },
-            ].map((edu) => (
-              <motion.div
-                key={edu.school}
-                variants={itemVariants}
-                className="relative pl-8 border-l-2 border-gray-300"
-              >
-                <div
-                  className={`absolute w-4 h-4 ${
-                    edu.current ? "bg-black" : "bg-gray-400"
-                  } rounded-full -left-[9px] top-1`}
-                ></div>
-                <h4 className="font-bold text-xl">{edu.school}</h4>
-                <p className="text-gray-700 font-medium">{edu.degree}</p>
-                <p className="text-sm text-gray-600 mt-1">{edu.period}</p>
-                <p className="mt-2 text-gray-600 leading-relaxed">
-                  {edu.description}
+        {/* Enhanced About Section */}
+        <Section id="about" className="bg-gradient-to-br from-gray-50 to-white">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="text-center mb-16"
+            >
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 rounded-full border border-blue-200/50 mb-6">
+                <Sparkles className="w-5 h-5 text-blue-600" />
+                <span className="text-sm font-medium text-blue-700">About Me</span>
+              </div>
+              <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-6">
+                Passionate About Quality
+              </h2>
+              <div className="max-w-4xl mx-auto">
+                <p className="text-xl text-gray-600 leading-relaxed mb-8">
+                  I'm a dedicated QA professional and computing student with a strong passion for 
+                  ensuring software quality and reliability. My journey in technology is driven by 
+                  curiosity, continuous learning, and a commitment to excellence.
                 </p>
-              </motion.div>
-            ))}
-          </motion.div>
-        </Section>
-
-        <Section id="skills" delay={0.3}>
-          <div className="flex items-center gap-3 mb-8">
-            <Code2 className="w-8 h-8 text-gray-700" />
-            <h3 className="text-2xl sm:text-3xl font-bold">
-              Skills & Expertise
-            </h3>
-          </div>
-          <motion.div
-            className="grid md:grid-cols-2 gap-12 max-w-4xl mx-auto"
-            variants={containerVariants}
-          >
-            <div className="space-y-6">
-              <h4 className="font-bold text-xl">Technical Proficiency</h4>
-              <div className="grid grid-cols-2 gap-4">
-                {skills.technical.map((skill) => (
+                <div className="grid md:grid-cols-3 gap-8 mt-12">
                   <motion.div
-                    key={skill.name}
-                    className="skill-card flex items-center gap-2 p-2 bg-gray-100 rounded-lg shadow-sm"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
+                    whileHover={{ y: -5 }}
+                    className="p-6 bg-white rounded-2xl shadow-lg border border-gray-100"
                   >
-                    <skill.icon className="w-6 h-6 text-gray-700" />
-                    <span className="text-sm font-medium text-gray-700">
-                      {skill.name}
-                    </span>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-            <div className="space-y-6">
-              <h4 className="font-bold text-xl">Design Tools</h4>
-              <div className="grid grid-cols-2 gap-4">
-                {skills.design.map((skill) => (
-                  <motion.div
-                    key={skill.name}
-                    className="skill-card flex items-center gap-2 p-2 bg-gray-100 rounded-lg shadow-sm"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <skill.icon className="w-6 h-6 text-gray-700" />
-                    <span className="text-sm font-medium text-gray-700">
-                      {skill.name}
-                    </span>
-                  </motion.div>
-                ))}
-              </div>
-              <h4 className="font-bold text-xl mt-8">Soft Skills</h4>
-              <div className="grid grid-cols-2 gap-4">
-                {skills.soft.map((skill) => (
-                  <motion.div
-                    key={skill.name}
-                    className="skill-card flex items-center gap-2 p-2 bg-gray-100 rounded-lg shadow-sm"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <skill.icon className="w-6 h-6 text-gray-700" />
-                    <span className="text-sm font-medium text-gray-700">
-                      {skill.name}
-                    </span>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-          </motion.div>
-        </Section>
-
-        <Section id="experience" delay={0.4}>
-          <div className="flex items-center gap-3 mb-8">
-            <Briefcase className="w-8 h-8 text-gray-700" />
-            <h3 className="text-2xl sm:text-3xl font-bold">Work Experience</h3>
-          </div>
-          <motion.div
-            className="space-y-12 max-w-3xl mx-auto"
-            variants={containerVariants}
-          >
-            {[
-              {
-                role: "Quality Assurance Trainee",
-                company: "ING Tech",
-                period: "2024 August - Present",
-                responsibilities: [
-                  "Developing and maintaining test cases",
-                  "Performing comprehensive manual testing",
-                  "Collaborating with development teams for quality improvements",
-                  "Contributing to test strategy and documentation",
-                ],
-              },
-              {
-                role: "Quality Assurance Intern",
-                company: "ING Tech",
-                period: "2024 June - 2024 August",
-                responsibilities: [
-                  "Learned and applied QA methodologies",
-                  "Assisted in test case development",
-                  "Participated in agile ceremonies",
-                  "Gained hands-on experience with testing tools",
-                ],
-              },
-            ].map((exp) => (
-              <motion.div
-                key={exp.period}
-                variants={itemVariants}
-                className="p-6 bg-gray-100 rounded-lg shadow-md hover:shadow-lg transition-shadow border border-gray-200 card-3d"
-              >
-                <h4 className="font-bold text-xl">{exp.role}</h4>
-                <p className="text-gray-700 font-medium">{exp.company}</p>
-                <p className="text-sm text-gray-600 mt-1">{exp.period}</p>
-                <ul className="mt-4 space-y-2">
-                  {exp.responsibilities.map((resp, i) => (
-                    <motion.li
-                      key={i}
-                      className="flex items-start gap-2"
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.1 * i }}
-                    >
-                      <ChevronRight className="w-5 h-5 text-gray-500 mt-1 flex-shrink-0" />
-                      <span className="text-gray-600">{resp}</span>
-                    </motion.li>
-                  ))}
-                </ul>
-              </motion.div>
-            ))}
-          </motion.div>
-        </Section>
-
-        <Section id="certifications" delay={0.5}>
-          <div className="flex items-center gap-3 mb-8">
-            <Award className="w-8 h-8 text-gray-700" />
-            <h3 className="text-2xl sm:text-3xl font-bold">Certifications</h3>
-          </div>
-          <motion.div
-            className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto"
-            variants={containerVariants}
-          >
-            {certifications.map((cert) => (
-              <motion.div
-                key={cert.name}
-                variants={itemVariants}
-                whileHover={{ y: -5 }}
-                className="certification-card p-6 rounded-xl shadow-lg hover:shadow-xl transition-all border border-gray-100 bg-white card-hover"
-                onClick={() => setSelectedCert(cert.fullImage)}
-              >
-                <div className="flex flex-col items-center space-y-4">
-                  <Image
-                    src={cert.image || "/placeholder.svg"}
-                    alt={cert.alt}
-                    width={80}
-                    height={80}
-                    className="rounded-lg"
-                  />
-                  <div className="text-center">
-                    <h4 className="font-bold text-base">{cert.name}</h4>
-                    <p className="text-xs text-gray-600 mt-1">
-                      Amazon Web Services
+                    <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl flex items-center justify-center mb-4">
+                      <TestTube className="w-6 h-6 text-white" />
+                    </div>
+                    <h3 className="font-semibold text-gray-800 mb-2">QA Excellence</h3>
+                    <p className="text-gray-600 text-sm">
+                      Specialized in manual and automated testing with a keen eye for detail
                     </p>
+                  </motion.div>
+                  <motion.div
+                    whileHover={{ y: -5 }}
+                    className="p-6 bg-white rounded-2xl shadow-lg border border-gray-100"
+                  >
+                    <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-teal-500 rounded-xl flex items-center justify-center mb-4">
+                      <Award className="w-6 h-6 text-white" />
+                    </div>
+                    <h3 className="font-semibold text-gray-800 mb-2">AWS Certified</h3>
+                    <p className="text-gray-600 text-sm">
+                      Multiple AWS certifications in cloud foundations and machine learning
+                    </p>
+                  </motion.div>
+                  <motion.div
+                    whileHover={{ y: -5 }}
+                    className="p-6 bg-white rounded-2xl shadow-lg border border-gray-100"
+                  >
+                    <div className="w-12 h-12 bg-gradient-to-r from-orange-500 to-red-500 rounded-xl flex items-center justify-center mb-4">
+                      <TrendingUp className="w-6 h-6 text-white" />
+                    </div>
+                    <h3 className="font-semibold text-gray-800 mb-2">Continuous Growth</h3>
+                    <p className="text-gray-600 text-sm">
+                      Always learning and adapting to new technologies and methodologies
+                    </p>
+                  </motion.div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </Section>
+
+        {/* Enhanced Education Section */}
+        <Section id="education" className="bg-white">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="text-center mb-16"
+            >
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-50 rounded-full border border-green-200/50 mb-6">
+                <Book className="w-5 h-5 text-green-600" />
+                <span className="text-sm font-medium text-green-700">Education</span>
+              </div>
+              <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
+                Academic Journey
+              </h2>
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                Building a strong foundation through continuous learning and academic excellence
+              </p>
+            </motion.div>
+
+            <motion.div
+              className="max-w-4xl mx-auto"
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+            >
+              {[
+                {
+                  school: "Islington College",
+                  degree: "BSc Honours in Computing",
+                  period: "2022-2025",
+                  description:
+                    "Focusing on software development, testing, and quality assurance. Maintaining excellent academic performance with hands-on experience in modern technologies.",
+                  current: true,
+                  color: "from-blue-500 to-purple-500",
+                },
+                {
+                  school: "Trinity International SS/College",
+                  degree: "High School",
+                  period: "2020-2022",
+                  description:
+                    "Completed high school with focus on science and mathematics, laying the groundwork for technical education.",
+                  current: false,
+                  color: "from-green-500 to-teal-500",
+                },
+                {
+                  school: "Meridian International",
+                  degree: "School",
+                  period: "2009-2019",
+                  description:
+                    "Built strong foundation in academics and participated in various extracurricular activities, developing leadership and teamwork skills.",
+                  current: false,
+                  color: "from-orange-500 to-red-500",
+                },
+              ].map((edu, index) => (
+                <motion.div
+                  key={edu.school}
+                  variants={itemVariants}
+                  whileHover={{ x: 10 }}
+                  className="relative mb-12 last:mb-0"
+                >
+                  <div className="flex items-start gap-6">
+                    <div className="flex-shrink-0">
+                      <div className={`w-16 h-16 bg-gradient-to-r ${edu.color} rounded-2xl flex items-center justify-center shadow-lg`}>
+                        <Book className="w-8 h-8 text-white" />
+                      </div>
+                      {index < 2 && (
+                        <div className="w-0.5 h-16 bg-gray-200 mx-auto mt-4"></div>
+                      )}
+                    </div>
+                    <div className="flex-1 bg-white rounded-2xl p-8 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300">
+                      <div className="flex items-center gap-3 mb-3">
+                        <h3 className="text-2xl font-bold text-gray-800">{edu.school}</h3>
+                        {edu.current && (
+                          <span className="px-3 py-1 bg-green-100 text-green-700 text-xs font-medium rounded-full">
+                            Current
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-lg font-semibold text-gray-600 mb-2">{edu.degree}</p>
+                      <p className="text-sm text-gray-500 mb-4">{edu.period}</p>
+                      <p className="text-gray-600 leading-relaxed">{edu.description}</p>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
+        </Section>
+
+        {/* Enhanced Skills Section */}
+        <EnhancedSkills />
+
+        {/* Enhanced Experience Section */}
+        <Section id="experience" className="bg-white">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="text-center mb-16"
+            >
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-purple-50 rounded-full border border-purple-200/50 mb-6">
+                <Briefcase className="w-5 h-5 text-purple-600" />
+                <span className="text-sm font-medium text-purple-700">Experience</span>
+              </div>
+              <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
+                Professional Journey
+              </h2>
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                Growing expertise through hands-on experience in quality assurance and software testing
+              </p>
+            </motion.div>
+
+            <motion.div
+              className="max-w-4xl mx-auto space-y-8"
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+            >
+              {[
+                {
+                  role: "Quality Assurance Trainee",
+                  company: "ING Tech",
+                  period: "2024 August - Present",
+                  responsibilities: [
+                    "Developing and maintaining comprehensive test cases for web and mobile applications",
+                    "Performing thorough manual testing across multiple platforms and browsers",
+                    "Collaborating with development teams to identify and resolve quality issues",
+                    "Contributing to test strategy development and documentation improvements",
+                    "Participating in agile ceremonies and sprint planning sessions",
+                  ],
+                  current: true,
+                },
+                {
+                  role: "Quality Assurance Intern",
+                  company: "ING Tech",
+                  period: "2024 June - 2024 August",
+                  responsibilities: [
+                    "Learned and applied industry-standard QA methodologies and best practices",
+                    "Assisted in developing detailed test cases and test scenarios",
+                    "Participated in daily standups and agile development processes",
+                    "Gained hands-on experience with testing tools and bug tracking systems",
+                    "Contributed to team knowledge sharing and documentation efforts",
+                  ],
+                  current: false,
+                },
+              ].map((exp, index) => (
+                <motion.div
+                  key={exp.period}
+                  variants={itemVariants}
+                  whileHover={{ y: -5 }}
+                  className="relative bg-gradient-to-br from-white to-gray-50 rounded-3xl p-8 shadow-xl border border-gray-100 hover:shadow-2xl transition-all duration-300"
+                >
+                  <div className="flex items-start justify-between mb-6">
+                    <div>
+                      <div className="flex items-center gap-3 mb-2">
+                        <h3 className="text-2xl font-bold text-gray-800">{exp.role}</h3>
+                        {exp.current && (
+                          <span className="px-3 py-1 bg-green-100 text-green-700 text-xs font-medium rounded-full flex items-center gap-1">
+                            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                            Current
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-lg font-semibold text-purple-600 mb-1">{exp.company}</p>
+                      <p className="text-sm text-gray-500">{exp.period}</p>
+                    </div>
+                    <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center shadow-lg">
+                      <Briefcase className="w-8 h-8 text-white" />
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-3">
+                    {exp.responsibilities.map((resp, i) => (
+                      <motion.div
+                        key={i}
+                        className="flex items-start gap-3"
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.1 * i }}
+                      >
+                        <div className="w-6 h-6 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                          <ChevronRight className="w-3 h-3 text-white" />
+                        </div>
+                        <span className="text-gray-600 leading-relaxed">{resp}</span>
+                      </motion.div>
+                    ))}
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
+        </Section>
+
+        {/* Enhanced Certifications Section */}
+        <Section id="certifications" className="bg-gradient-to-br from-gray-50 to-white">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="text-center mb-16"
+            >
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-orange-50 rounded-full border border-orange-200/50 mb-6">
+                <Award className="w-5 h-5 text-orange-600" />
+                <span className="text-sm font-medium text-orange-700">Certifications</span>
+              </div>
+              <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
+                Professional Certifications
+              </h2>
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                Validated expertise through industry-recognized AWS certifications
+              </p>
+            </motion.div>
+
+            <motion.div
+              className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto"
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+            >
+              {certifications.map((cert, index) => (
+                <motion.div
+                  key={cert.name}
+                  variants={itemVariants}
+                  whileHover={{ y: -10, scale: 1.02 }}
+                  className="group relative bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 border border-gray-100 cursor-pointer overflow-hidden"
+                  onClick={() => setSelectedCert(cert.fullImage)}
+                >
+                  {/* Background gradient on hover */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-orange-50 to-yellow-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  
+                  <div className="relative z-10 flex flex-col items-center space-y-6">
+                    <div className="relative">
+                      <Image
+                        src={cert.image || "/placeholder.svg"}
+                        alt={cert.alt}
+                        width={100}
+                        height={100}
+                        className="rounded-2xl shadow-lg group-hover:scale-110 transition-transform duration-300"
+                      />
+                      <div className="absolute -top-2 -right-2 w-6 h-6 bg-gradient-to-r from-green-400 to-green-500 rounded-full flex items-center justify-center">
+                        <Star className="w-3 h-3 text-white" />
+                      </div>
+                    </div>
+                    <div className="text-center">
+                      <h3 className="font-bold text-lg text-gray-800 mb-2 group-hover:text-orange-600 transition-colors">
+                        {cert.name}
+                      </h3>
+                      <p className="text-sm text-gray-500 mb-4">Amazon Web Services</p>
+                      <div className="inline-flex items-center gap-1 px-3 py-1 bg-orange-100 text-orange-700 text-xs font-medium rounded-full">
+                        <Award className="w-3 h-3" />
+                        Certified
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
+        </Section>
+
+        {/* Enhanced Contact Section */}
+        <Section id="contact" className="bg-gradient-to-br from-blue-50 to-purple-50">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="text-center mb-16"
+            >
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-100 rounded-full border border-blue-200/50 mb-6">
+                <Mail className="w-5 h-5 text-blue-600" />
+                <span className="text-sm font-medium text-blue-700">Get in Touch</span>
+              </div>
+              <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
+                Let's Connect
+              </h2>
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                Have a question or want to collaborate? I'd love to hear from you!
+              </p>
+            </motion.div>
+
+            <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
+              <motion.div
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8 }}
+                className="space-y-8"
+              >
+                <div className="bg-white rounded-3xl p-8 shadow-xl border border-gray-100">
+                  <h3 className="text-2xl font-bold text-gray-800 mb-6">Contact Information</h3>
+                  <div className="space-y-6">
+                    <motion.div
+                      className="flex items-center gap-4"
+                      whileHover={{ x: 5 }}
+                    >
+                      <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl flex items-center justify-center">
+                        <Phone className="w-6 h-6 text-white" />
+                      </div>
+                      <div>
+                        <p className="text-sm text-gray-500">Phone</p>
+                        <a
+                          href="tel:+977-9813761895"
+                          className="text-gray-800 hover:text-blue-600 transition-colors font-medium"
+                        >
+                          +977-9813761895
+                        </a>
+                      </div>
+                    </motion.div>
+                    <motion.div
+                      className="flex items-center gap-4"
+                      whileHover={{ x: 5 }}
+                    >
+                      <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-teal-500 rounded-xl flex items-center justify-center">
+                        <Mail className="w-6 h-6 text-white" />
+                      </div>
+                      <div>
+                        <p className="text-sm text-gray-500">Email</p>
+                        <a
+                          href="mailto:Shreeyush23@gmail.com"
+                          className="text-gray-800 hover:text-green-600 transition-colors font-medium"
+                        >
+                          Shreeyush23@gmail.com
+                        </a>
+                      </div>
+                    </motion.div>
+                    <motion.div
+                      className="flex items-center gap-4"
+                      whileHover={{ x: 5 }}
+                    >
+                      <div className="w-12 h-12 bg-gradient-to-r from-orange-500 to-red-500 rounded-xl flex items-center justify-center">
+                        <MapPin className="w-6 h-6 text-white" />
+                      </div>
+                      <div>
+                        <p className="text-sm text-gray-500">Location</p>
+                        <span className="text-gray-800 font-medium">Kathmandu, Nepal 44600</span>
+                      </div>
+                    </motion.div>
                   </div>
                 </div>
               </motion.div>
-            ))}
-          </motion.div>
-        </Section>
 
-        <Section id="contact" delay={0.6} className="space-y-8">
-          <div className="text-center">
-            <h3 className="text-2xl sm:text-3xl font-bold">Get in Touch</h3>
-            <p className="text-gray-600 mt-2">
-              Have a question or want to work together?
-            </p>
-          </div>
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            <div className="space-y-4">
               <motion.div
-                className="flex items-center gap-3"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.1 }}
+                initial={{ opacity: 0, x: 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8 }}
+                className="bg-white rounded-3xl p-8 shadow-xl border border-gray-100"
               >
-                <Phone className="w-5 h-5 text-gray-700" />
-                <a
-                  href="tel:+977-9813761895"
-                  className="text-gray-600 hover:text-black transition-colors"
-                >
-                  +977-9813761895
-                </a>
+                <ContactForm />
               </motion.div>
-              <motion.div
-                className="flex items-center gap-3"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.2 }}
-              >
-                <Mail className="w-5 h-5 text-gray-700" />
-                <a
-                  href="mailto:Shreeyushdhungana@gmail.com"
-                  className="text-gray-600 hover:text-black transition-colors"
-                >
-                  Shreeyush23@gmail.com
-                </a>
-              </motion.div>
-              <motion.div
-                className="flex items-center gap-3"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.3 }}
-              >
-                <MapPin className="w-5 h-5 text-gray-700" />
-                <span className="text-gray-600">Kathmandu, Nepal 44600</span>
-              </motion.div>
-              <motion.div
-                className="flex items-center gap-4 mt-4"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 }}
-              ></motion.div>
             </div>
-            <ContactForm />
           </div>
         </Section>
 
-        <Section id="quote" delay={0.6} className="text-center space-y-8">
-          <motion.div
-            className="quote-card mt-12 p-6 bg-gray-100 rounded-lg shadow-md"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <motion.p
-              className="text-lg italic text-gray-700"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
+        {/* Enhanced Quote Section */}
+        <Section id="quote" className="bg-white">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <motion.div
+              className="max-w-4xl mx-auto text-center"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
             >
-              {randomQuote}
-            </motion.p>
-          </motion.div>
+              <div className="bg-gradient-to-br from-gray-50 to-blue-50 rounded-3xl p-12 shadow-xl border border-gray-100">
+                <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center mx-auto mb-8">
+                  <Sparkles className="w-8 h-8 text-white" />
+                </div>
+                <blockquote className="text-xl sm:text-2xl italic text-gray-700 leading-relaxed">
+                  "{randomQuote}"
+                </blockquote>
+              </div>
+            </motion.div>
+          </div>
         </Section>
       </main>
 
-      <footer className="mt-16 bg-gray-100">
-        <div className="container mx-auto px-4 py-8">
-          <p className="text-center text-gray-600 font-medium">
-            &copy; {new Date().getFullYear()} Shreeyush Dhungana. All rights
-            reserved.
-          </p>
+      {/* Enhanced Footer */}
+      <footer className="bg-gray-900 text-white py-12">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              className="mb-8"
+            >
+              <h3 className="text-2xl font-bold mb-4">Shreeyush Dhungana</h3>
+              <p className="text-gray-400 mb-6">QA Professional & Computing Student</p>
+              <div className="flex items-center justify-center gap-6">
+                <motion.a
+                  href="https://github.com/Mascot-11"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-3 bg-gray-800 rounded-full hover:bg-gray-700 transition-colors"
+                  whileHover={{ scale: 1.1 }}
+                >
+                  <Github className="w-6 h-6" />
+                </motion.a>
+                <motion.a
+                  href="https://www.instagram.com/_.mascot/?hl=en"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-3 bg-gray-800 rounded-full hover:bg-gray-700 transition-colors"
+                  whileHover={{ scale: 1.1 }}
+                >
+                  <Instagram className="w-6 h-6" />
+                </motion.a>
+              </div>
+            </motion.div>
+            <div className="border-t border-gray-800 pt-8">
+              <p className="text-gray-400">
+                &copy; {new Date().getFullYear()} Shreeyush Dhungana. All rights reserved.
+              </p>
+            </div>
+          </div>
         </div>
       </footer>
 
+      {/* Modals and Overlays */}
       <Modal isOpen={!!selectedCert} onClose={() => setSelectedCert(null)}>
         {selectedCert && (
           <div className="relative">
@@ -748,11 +829,16 @@ export default function Portfolio() {
               alt="Certificate"
               width={800}
               height={600}
-              className="rounded-lg"
+              className="rounded-2xl shadow-2xl"
             />
           </div>
         )}
       </Modal>
+
+      {/* Analytics Dashboard */}
+      <AnalyticsDashboard />
+      
+      {/* Spotlight Cursor */}
       <SpotlightCursor />
     </div>
   );
