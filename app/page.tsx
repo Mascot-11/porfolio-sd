@@ -38,7 +38,6 @@ import {
 } from "lucide-react";
 import { ContactForm } from "./components/ContactForm";
 import { Modal } from "./components/Modal";
-import { SpotlightCursor } from "./components/SpotlightCursor";
 import { EnhancedHero } from "./components/EnhancedHero";
 import { EnhancedSkills } from "./components/EnhancedSkills";
 import { AnalyticsDashboard } from "./components/AnalyticsDashboard";
@@ -251,13 +250,13 @@ export default function Portfolio() {
         }}
       />
       
-      {/* Enhanced Header */}
+      {/* Clean Header */}
       <header
         ref={headerRef}
-        className="fixed top-0 w-full bg-white/95 backdrop-blur-md z-50 border-b border-gray-100 shadow-sm"
+        className="fixed top-0 w-full bg-white/95 backdrop-blur-sm z-50 border-b border-gray-200"
       >
         <motion.div 
-          className="h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 origin-left" 
+          className="h-1 bg-gray-900 origin-left" 
           style={{ scaleX }} 
         />
         <nav className="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
@@ -265,7 +264,7 @@ export default function Portfolio() {
             <motion.h1
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
-              className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent"
+              className="text-xl sm:text-2xl font-bold text-gray-900"
             >
               Shreeyush Dhungana
             </motion.h1>
@@ -276,10 +275,10 @@ export default function Portfolio() {
                   key={item.id}
                   onClick={() => scrollToSection(item.id)}
                   aria-current={activeTab === item.id ? "page" : undefined}
-                  className={`px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 ${
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
                     activeTab === item.id
-                      ? "bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg"
-                      : "text-gray-600 hover:bg-gray-50 hover:text-gray-800"
+                      ? "bg-gray-900 text-white"
+                      : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
                   }`}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
@@ -291,7 +290,7 @@ export default function Portfolio() {
 
             <motion.button
               aria-label="Toggle menu"
-              className="md:hidden p-2 rounded-xl text-gray-700 hover:bg-gray-100 hover:text-black transition-colors"
+              className="md:hidden p-2 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
@@ -310,13 +309,13 @@ export default function Portfolio() {
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: "auto" }}
                 exit={{ opacity: 0, height: 0 }}
-                className="md:hidden mt-4 bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden"
+                className="md:hidden mt-4 bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden"
               >
                 {navItems.map((item) => (
                   <motion.button
                     key={item.id}
                     onClick={() => scrollToSection(item.id)}
-                    className="block w-full text-left py-3 px-4 text-gray-700 hover:bg-gray-50 hover:text-black transition-colors"
+                    className="block w-full text-left py-3 px-4 text-gray-700 hover:bg-gray-50 transition-colors"
                     whileHover={{ x: 5 }}
                   >
                     {item.label}
@@ -332,21 +331,22 @@ export default function Portfolio() {
         id="main-content"
         className="pt-24"
       >
-        {/* Enhanced Hero Section */}
+        {/* Hero Section */}
         <EnhancedHero />
 
-        {/* Enhanced About Section */}
-        <Section id="about" className="bg-gradient-to-br from-gray-50 to-white">
+        {/* About Section */}
+        <Section id="about" className="bg-gray-50">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
               transition={{ duration: 0.8 }}
               className="text-center mb-16"
             >
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 rounded-full border border-blue-200/50 mb-6">
-                <Sparkles className="w-5 h-5 text-blue-600" />
-                <span className="text-sm font-medium text-blue-700">About Me</span>
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-gray-200 mb-6">
+                <Sparkles className="w-5 h-5 text-gray-700" />
+                <span className="text-sm font-medium text-gray-700">About Me</span>
               </div>
               <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-6">
                 Passionate About Quality
@@ -360,36 +360,36 @@ export default function Portfolio() {
                 <div className="grid md:grid-cols-3 gap-8 mt-12">
                   <motion.div
                     whileHover={{ y: -5 }}
-                    className="p-6 bg-white rounded-2xl shadow-lg border border-gray-100"
+                    className="p-6 bg-white rounded-xl shadow-sm border border-gray-200"
                   >
-                    <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl flex items-center justify-center mb-4">
+                    <div className="w-12 h-12 bg-gray-900 rounded-lg flex items-center justify-center mb-4">
                       <TestTube className="w-6 h-6 text-white" />
                     </div>
-                    <h3 className="font-semibold text-gray-800 mb-2">QA Excellence</h3>
+                    <h3 className="font-semibold text-gray-900 mb-2">QA Excellence</h3>
                     <p className="text-gray-600 text-sm">
                       Specialized in manual and automated testing with a keen eye for detail
                     </p>
                   </motion.div>
                   <motion.div
                     whileHover={{ y: -5 }}
-                    className="p-6 bg-white rounded-2xl shadow-lg border border-gray-100"
+                    className="p-6 bg-white rounded-xl shadow-sm border border-gray-200"
                   >
-                    <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-teal-500 rounded-xl flex items-center justify-center mb-4">
+                    <div className="w-12 h-12 bg-gray-900 rounded-lg flex items-center justify-center mb-4">
                       <Award className="w-6 h-6 text-white" />
                     </div>
-                    <h3 className="font-semibold text-gray-800 mb-2">AWS Certified</h3>
+                    <h3 className="font-semibold text-gray-900 mb-2">AWS Certified</h3>
                     <p className="text-gray-600 text-sm">
                       Multiple AWS certifications in cloud foundations and machine learning
                     </p>
                   </motion.div>
                   <motion.div
                     whileHover={{ y: -5 }}
-                    className="p-6 bg-white rounded-2xl shadow-lg border border-gray-100"
+                    className="p-6 bg-white rounded-xl shadow-sm border border-gray-200"
                   >
-                    <div className="w-12 h-12 bg-gradient-to-r from-orange-500 to-red-500 rounded-xl flex items-center justify-center mb-4">
+                    <div className="w-12 h-12 bg-gray-900 rounded-lg flex items-center justify-center mb-4">
                       <TrendingUp className="w-6 h-6 text-white" />
                     </div>
-                    <h3 className="font-semibold text-gray-800 mb-2">Continuous Growth</h3>
+                    <h3 className="font-semibold text-gray-900 mb-2">Continuous Growth</h3>
                     <p className="text-gray-600 text-sm">
                       Always learning and adapting to new technologies and methodologies
                     </p>
@@ -400,18 +400,19 @@ export default function Portfolio() {
           </div>
         </Section>
 
-        {/* Enhanced Education Section */}
+        {/* Education Section */}
         <Section id="education" className="bg-white">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
               transition={{ duration: 0.8 }}
               className="text-center mb-16"
             >
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-50 rounded-full border border-green-200/50 mb-6">
-                <Book className="w-5 h-5 text-green-600" />
-                <span className="text-sm font-medium text-green-700">Education</span>
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 rounded-full border border-gray-200 mb-6">
+                <Book className="w-5 h-5 text-gray-700" />
+                <span className="text-sm font-medium text-gray-700">Education</span>
               </div>
               <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
                 Academic Journey
@@ -426,6 +427,7 @@ export default function Portfolio() {
               variants={containerVariants}
               initial="hidden"
               whileInView="visible"
+              viewport={{ once: true }}
             >
               {[
                 {
@@ -435,7 +437,6 @@ export default function Portfolio() {
                   description:
                     "Focusing on software development, testing, and quality assurance. Maintaining excellent academic performance with hands-on experience in modern technologies.",
                   current: true,
-                  color: "from-blue-500 to-purple-500",
                 },
                 {
                   school: "Trinity International SS/College",
@@ -444,7 +445,6 @@ export default function Portfolio() {
                   description:
                     "Completed high school with focus on science and mathematics, laying the groundwork for technical education.",
                   current: false,
-                  color: "from-green-500 to-teal-500",
                 },
                 {
                   school: "Meridian International",
@@ -453,7 +453,6 @@ export default function Portfolio() {
                   description:
                     "Built strong foundation in academics and participated in various extracurricular activities, developing leadership and teamwork skills.",
                   current: false,
-                  color: "from-orange-500 to-red-500",
                 },
               ].map((edu, index) => (
                 <motion.div
@@ -464,23 +463,23 @@ export default function Portfolio() {
                 >
                   <div className="flex items-start gap-6">
                     <div className="flex-shrink-0">
-                      <div className={`w-16 h-16 bg-gradient-to-r ${edu.color} rounded-2xl flex items-center justify-center shadow-lg`}>
+                      <div className="w-16 h-16 bg-gray-900 rounded-xl flex items-center justify-center">
                         <Book className="w-8 h-8 text-white" />
                       </div>
                       {index < 2 && (
                         <div className="w-0.5 h-16 bg-gray-200 mx-auto mt-4"></div>
                       )}
                     </div>
-                    <div className="flex-1 bg-white rounded-2xl p-8 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300">
+                    <div className="flex-1 bg-white rounded-xl p-8 shadow-sm border border-gray-200 hover:shadow-md transition-all duration-300">
                       <div className="flex items-center gap-3 mb-3">
-                        <h3 className="text-2xl font-bold text-gray-800">{edu.school}</h3>
+                        <h3 className="text-2xl font-bold text-gray-900">{edu.school}</h3>
                         {edu.current && (
-                          <span className="px-3 py-1 bg-green-100 text-green-700 text-xs font-medium rounded-full">
+                          <span className="px-3 py-1 bg-gray-100 text-gray-700 text-xs font-medium rounded-full">
                             Current
                           </span>
                         )}
                       </div>
-                      <p className="text-lg font-semibold text-gray-600 mb-2">{edu.degree}</p>
+                      <p className="text-lg font-semibold text-gray-700 mb-2">{edu.degree}</p>
                       <p className="text-sm text-gray-500 mb-4">{edu.period}</p>
                       <p className="text-gray-600 leading-relaxed">{edu.description}</p>
                     </div>
@@ -491,21 +490,22 @@ export default function Portfolio() {
           </div>
         </Section>
 
-        {/* Enhanced Skills Section */}
+        {/* Skills Section */}
         <EnhancedSkills />
 
-        {/* Enhanced Experience Section */}
+        {/* Experience Section */}
         <Section id="experience" className="bg-white">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
               transition={{ duration: 0.8 }}
               className="text-center mb-16"
             >
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-purple-50 rounded-full border border-purple-200/50 mb-6">
-                <Briefcase className="w-5 h-5 text-purple-600" />
-                <span className="text-sm font-medium text-purple-700">Experience</span>
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 rounded-full border border-gray-200 mb-6">
+                <Briefcase className="w-5 h-5 text-gray-700" />
+                <span className="text-sm font-medium text-gray-700">Experience</span>
               </div>
               <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
                 Professional Journey
@@ -520,6 +520,7 @@ export default function Portfolio() {
               variants={containerVariants}
               initial="hidden"
               whileInView="visible"
+              viewport={{ once: true }}
             >
               {[
                 {
@@ -553,23 +554,23 @@ export default function Portfolio() {
                   key={exp.period}
                   variants={itemVariants}
                   whileHover={{ y: -5 }}
-                  className="relative bg-gradient-to-br from-white to-gray-50 rounded-3xl p-8 shadow-xl border border-gray-100 hover:shadow-2xl transition-all duration-300"
+                  className="relative bg-white rounded-xl p-8 shadow-sm border border-gray-200 hover:shadow-md transition-all duration-300"
                 >
                   <div className="flex items-start justify-between mb-6">
                     <div>
                       <div className="flex items-center gap-3 mb-2">
-                        <h3 className="text-2xl font-bold text-gray-800">{exp.role}</h3>
+                        <h3 className="text-2xl font-bold text-gray-900">{exp.role}</h3>
                         {exp.current && (
-                          <span className="px-3 py-1 bg-green-100 text-green-700 text-xs font-medium rounded-full flex items-center gap-1">
-                            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                          <span className="px-3 py-1 bg-gray-100 text-gray-700 text-xs font-medium rounded-full flex items-center gap-1">
+                            <div className="w-2 h-2 bg-gray-600 rounded-full"></div>
                             Current
                           </span>
                         )}
                       </div>
-                      <p className="text-lg font-semibold text-purple-600 mb-1">{exp.company}</p>
+                      <p className="text-lg font-semibold text-gray-700 mb-1">{exp.company}</p>
                       <p className="text-sm text-gray-500">{exp.period}</p>
                     </div>
-                    <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center shadow-lg">
+                    <div className="w-16 h-16 bg-gray-900 rounded-xl flex items-center justify-center">
                       <Briefcase className="w-8 h-8 text-white" />
                     </div>
                   </div>
@@ -581,9 +582,10 @@ export default function Portfolio() {
                         className="flex items-start gap-3"
                         initial={{ opacity: 0, x: -20 }}
                         whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
                         transition={{ delay: 0.1 * i }}
                       >
-                        <div className="w-6 h-6 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <div className="w-6 h-6 bg-gray-900 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
                           <ChevronRight className="w-3 h-3 text-white" />
                         </div>
                         <span className="text-gray-600 leading-relaxed">{resp}</span>
@@ -596,18 +598,19 @@ export default function Portfolio() {
           </div>
         </Section>
 
-        {/* Enhanced Certifications Section */}
-        <Section id="certifications" className="bg-gradient-to-br from-gray-50 to-white">
+        {/* Certifications Section */}
+        <Section id="certifications" className="bg-gray-50">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
               transition={{ duration: 0.8 }}
               className="text-center mb-16"
             >
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-orange-50 rounded-full border border-orange-200/50 mb-6">
-                <Award className="w-5 h-5 text-orange-600" />
-                <span className="text-sm font-medium text-orange-700">Certifications</span>
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-gray-200 mb-6">
+                <Award className="w-5 h-5 text-gray-700" />
+                <span className="text-sm font-medium text-gray-700">Certifications</span>
               </div>
               <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
                 Professional Certifications
@@ -622,37 +625,35 @@ export default function Portfolio() {
               variants={containerVariants}
               initial="hidden"
               whileInView="visible"
+              viewport={{ once: true }}
             >
               {certifications.map((cert, index) => (
                 <motion.div
                   key={cert.name}
                   variants={itemVariants}
-                  whileHover={{ y: -10, scale: 1.02 }}
-                  className="group relative bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 border border-gray-100 cursor-pointer overflow-hidden"
+                  whileHover={{ y: -5 }}
+                  className="bg-white rounded-xl p-8 shadow-sm hover:shadow-md transition-all duration-300 border border-gray-200 cursor-pointer"
                   onClick={() => setSelectedCert(cert.fullImage)}
                 >
-                  {/* Background gradient on hover */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-orange-50 to-yellow-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  
-                  <div className="relative z-10 flex flex-col items-center space-y-6">
+                  <div className="flex flex-col items-center space-y-6">
                     <div className="relative">
                       <Image
                         src={cert.image || "/placeholder.svg"}
                         alt={cert.alt}
                         width={100}
                         height={100}
-                        className="rounded-2xl shadow-lg group-hover:scale-110 transition-transform duration-300"
+                        className="rounded-lg"
                       />
-                      <div className="absolute -top-2 -right-2 w-6 h-6 bg-gradient-to-r from-green-400 to-green-500 rounded-full flex items-center justify-center">
+                      <div className="absolute -top-2 -right-2 w-6 h-6 bg-gray-900 rounded-full flex items-center justify-center">
                         <Star className="w-3 h-3 text-white" />
                       </div>
                     </div>
                     <div className="text-center">
-                      <h3 className="font-bold text-lg text-gray-800 mb-2 group-hover:text-orange-600 transition-colors">
+                      <h3 className="font-bold text-lg text-gray-900 mb-2">
                         {cert.name}
                       </h3>
                       <p className="text-sm text-gray-500 mb-4">Amazon Web Services</p>
-                      <div className="inline-flex items-center gap-1 px-3 py-1 bg-orange-100 text-orange-700 text-xs font-medium rounded-full">
+                      <div className="inline-flex items-center gap-1 px-3 py-1 bg-gray-100 text-gray-700 text-xs font-medium rounded-full">
                         <Award className="w-3 h-3" />
                         Certified
                       </div>
@@ -664,18 +665,19 @@ export default function Portfolio() {
           </div>
         </Section>
 
-        {/* Enhanced Contact Section */}
-        <Section id="contact" className="bg-gradient-to-br from-blue-50 to-purple-50">
+        {/* Contact Section */}
+        <Section id="contact" className="bg-white">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
               transition={{ duration: 0.8 }}
               className="text-center mb-16"
             >
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-100 rounded-full border border-blue-200/50 mb-6">
-                <Mail className="w-5 h-5 text-blue-600" />
-                <span className="text-sm font-medium text-blue-700">Get in Touch</span>
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 rounded-full border border-gray-200 mb-6">
+                <Mail className="w-5 h-5 text-gray-700" />
+                <span className="text-sm font-medium text-gray-700">Get in Touch</span>
               </div>
               <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
                 Let's Connect
@@ -689,24 +691,25 @@ export default function Portfolio() {
               <motion.div
                 initial={{ opacity: 0, x: -30 }}
                 whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
                 transition={{ duration: 0.8 }}
                 className="space-y-8"
               >
-                <div className="bg-white rounded-3xl p-8 shadow-xl border border-gray-100">
-                  <h3 className="text-2xl font-bold text-gray-800 mb-6">Contact Information</h3>
+                <div className="bg-gray-50 rounded-xl p-8 border border-gray-200">
+                  <h3 className="text-2xl font-bold text-gray-900 mb-6">Contact Information</h3>
                   <div className="space-y-6">
                     <motion.div
                       className="flex items-center gap-4"
                       whileHover={{ x: 5 }}
                     >
-                      <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl flex items-center justify-center">
+                      <div className="w-12 h-12 bg-gray-900 rounded-lg flex items-center justify-center">
                         <Phone className="w-6 h-6 text-white" />
                       </div>
                       <div>
                         <p className="text-sm text-gray-500">Phone</p>
                         <a
                           href="tel:+977-9813761895"
-                          className="text-gray-800 hover:text-blue-600 transition-colors font-medium"
+                          className="text-gray-900 hover:text-gray-700 transition-colors font-medium"
                         >
                           +977-9813761895
                         </a>
@@ -716,14 +719,14 @@ export default function Portfolio() {
                       className="flex items-center gap-4"
                       whileHover={{ x: 5 }}
                     >
-                      <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-teal-500 rounded-xl flex items-center justify-center">
+                      <div className="w-12 h-12 bg-gray-900 rounded-lg flex items-center justify-center">
                         <Mail className="w-6 h-6 text-white" />
                       </div>
                       <div>
                         <p className="text-sm text-gray-500">Email</p>
                         <a
                           href="mailto:Shreeyush23@gmail.com"
-                          className="text-gray-800 hover:text-green-600 transition-colors font-medium"
+                          className="text-gray-900 hover:text-gray-700 transition-colors font-medium"
                         >
                           Shreeyush23@gmail.com
                         </a>
@@ -733,12 +736,12 @@ export default function Portfolio() {
                       className="flex items-center gap-4"
                       whileHover={{ x: 5 }}
                     >
-                      <div className="w-12 h-12 bg-gradient-to-r from-orange-500 to-red-500 rounded-xl flex items-center justify-center">
+                      <div className="w-12 h-12 bg-gray-900 rounded-lg flex items-center justify-center">
                         <MapPin className="w-6 h-6 text-white" />
                       </div>
                       <div>
                         <p className="text-sm text-gray-500">Location</p>
-                        <span className="text-gray-800 font-medium">Kathmandu, Nepal 44600</span>
+                        <span className="text-gray-900 font-medium">Kathmandu, Nepal 44600</span>
                       </div>
                     </motion.div>
                   </div>
@@ -748,8 +751,9 @@ export default function Portfolio() {
               <motion.div
                 initial={{ opacity: 0, x: 30 }}
                 whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
                 transition={{ duration: 0.8 }}
-                className="bg-white rounded-3xl p-8 shadow-xl border border-gray-100"
+                className="bg-gray-50 rounded-xl p-8 border border-gray-200"
               >
                 <ContactForm />
               </motion.div>
@@ -757,17 +761,18 @@ export default function Portfolio() {
           </div>
         </Section>
 
-        {/* Enhanced Quote Section */}
-        <Section id="quote" className="bg-white">
+        {/* Quote Section */}
+        <Section id="quote" className="bg-gray-50">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
               className="max-w-4xl mx-auto text-center"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
               transition={{ duration: 0.8 }}
             >
-              <div className="bg-gradient-to-br from-gray-50 to-blue-50 rounded-3xl p-12 shadow-xl border border-gray-100">
-                <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center mx-auto mb-8">
+              <div className="bg-white rounded-xl p-12 shadow-sm border border-gray-200">
+                <div className="w-16 h-16 bg-gray-900 rounded-full flex items-center justify-center mx-auto mb-8">
                   <Sparkles className="w-8 h-8 text-white" />
                 </div>
                 <blockquote className="text-xl sm:text-2xl italic text-gray-700 leading-relaxed">
@@ -779,13 +784,14 @@ export default function Portfolio() {
         </Section>
       </main>
 
-      {/* Enhanced Footer */}
+      {/* Footer */}
       <footer className="bg-gray-900 text-white py-12">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
               className="mb-8"
             >
               <h3 className="text-2xl font-bold mb-4">Shreeyush Dhungana</h3>
@@ -820,7 +826,7 @@ export default function Portfolio() {
         </div>
       </footer>
 
-      {/* Modals and Overlays */}
+      {/* Modals */}
       <Modal isOpen={!!selectedCert} onClose={() => setSelectedCert(null)}>
         {selectedCert && (
           <div className="relative">
@@ -829,7 +835,7 @@ export default function Portfolio() {
               alt="Certificate"
               width={800}
               height={600}
-              className="rounded-2xl shadow-2xl"
+              className="rounded-xl"
             />
           </div>
         )}
@@ -837,9 +843,6 @@ export default function Portfolio() {
 
       {/* Analytics Dashboard */}
       <AnalyticsDashboard />
-      
-      {/* Spotlight Cursor */}
-      <SpotlightCursor />
     </div>
   );
 }
