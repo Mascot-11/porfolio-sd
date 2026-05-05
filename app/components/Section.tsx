@@ -8,6 +8,7 @@ interface SectionProps {
   className?: string;
   delay?: number;
   id: string;
+  title?: string;
 }
 
 export function Section({
@@ -15,6 +16,7 @@ export function Section({
   className = "",
   delay = 0,
   id,
+  title,
 }: SectionProps) {
   const [ref, inView] = useInView({
     triggerOnce: true,
@@ -45,9 +47,16 @@ export function Section({
       initial="hidden"
       animate={inView ? "visible" : "hidden"}
       variants={variants}
-      className={`py-12 ${className}`}
+      className={`py-16 px-4 sm:px-6 lg:px-8 ${className}`}
     >
-      {children}
+      <div className="container mx-auto max-w-5xl">
+        {title && (
+          <h2 className="text-4xl md:text-5xl font-bold mb-12 text-white">
+            {title}
+          </h2>
+        )}
+        {children}
+      </div>
     </motion.section>
   );
 }

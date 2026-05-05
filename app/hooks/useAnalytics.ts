@@ -87,7 +87,7 @@ export function useAnalytics() {
     };
   }, [sessionStartTime]);
 
-  const trackPageView = (page: string) => {
+  const trackPageView = () => {
     setAnalytics(prev => {
       const updated = { ...prev, pageViews: prev.pageViews + 1 };
       localStorage.setItem('portfolio-analytics', JSON.stringify(updated));

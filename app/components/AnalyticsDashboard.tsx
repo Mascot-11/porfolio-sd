@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { Eye, Clock, Users, TrendingUp, BarChart3, Activity } from "lucide-react";
 import { useAnalytics } from "../hooks/useAnalytics";
 
-export function AnalyticsDashboard() {
+function AnalyticsDashboard() {
   const { analytics } = useAnalytics();
 
   const formatTime = (seconds: number) => {
@@ -99,3 +99,5 @@ export function AnalyticsDashboard() {
     </motion.div>
   );
 }
+
+export default AnalyticsDashboard;
