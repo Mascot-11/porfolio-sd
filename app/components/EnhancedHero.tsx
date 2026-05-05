@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ChevronRight, Github, Instagram, Download, ArrowRight } from "lucide-react";
+import { Github, Instagram, Download, ArrowRight } from "lucide-react";
 
 export default function EnhancedHero() {
   return (

@@ -28,7 +28,13 @@ export function EnhancedSkills() {
     ],
   };
 
-  const SkillCard = ({ skill, index }: { skill: any; index: number }) => (
+  interface SkillItem {
+    name: string;
+    icon: typeof Code2;
+    level: string;
+  }
+
+  const SkillCard = ({ skill, index }: { skill: SkillItem; index: number }) => (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
