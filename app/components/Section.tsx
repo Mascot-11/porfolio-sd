@@ -11,7 +11,7 @@ interface SectionProps {
   title?: string;
 }
 
-export function Section({
+function Section({
   children,
   className = "",
   delay = 0,
@@ -60,3 +60,5 @@ export function Section({
     </motion.section>
   );
 }
+
+export default Section;

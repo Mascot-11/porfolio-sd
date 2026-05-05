@@ -6,7 +6,7 @@ import emailjs from "emailjs-com";
 import { toast } from "react-toastify"; // Import Toastify
 import "react-toastify/dist/ReactToastify.css"; // Import Toastify CSS
 
-export function ContactForm() {
+function ContactForm() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -140,3 +140,5 @@ export function ContactForm() {
     </motion.form>
   );
 }
+
+export default ContactForm;

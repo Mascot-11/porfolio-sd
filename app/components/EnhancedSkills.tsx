@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { Code2, PiIcon, TestTube, Database, Coffee, Eye, Figma, PenTool, Brain, Puzzle, Users, Clock, MessageSquare } from "lucide-react";
 
-export function EnhancedSkills() {
+function EnhancedSkills() {
   const skills = {
     technical: [
       { name: "Python", icon: PiIcon, level: "Advanced" },
@@ -144,3 +144,5 @@ export function EnhancedSkills() {
     </section>
   );
 }
+
+export default EnhancedSkills;
