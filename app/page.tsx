@@ -6,7 +6,7 @@ import AnalyticsDashboard from './components/AnalyticsDashboard';
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+    <main className="min-h-screen bg-slate-950">
       <EnhancedHero />
       
       <Section id="skills" title="Skills & Expertise">
